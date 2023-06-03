@@ -18,7 +18,7 @@ export class CustomParkingLotRepository extends AbstractRepository<User> {
     getSingleParking = async (id: any): Promise<any | undefined> => {
         let result = await this.createQueryBuilder("p")
             .where(`p.id = '${id}'`)
-            .getMany();
+            .getOne();
         return result;
     };
 
@@ -38,19 +38,13 @@ export class CustomParkingLotRepository extends AbstractRepository<User> {
         return result;
     };
 
-    // updateParking = async (body: any, id: any): Promise<any> => {
-    //     let result = await this.createQueryBuilder("dt")
-    //         .update()
-    //         .into(ParkingLotModel)
-    //         .values([
-    //             {name: body.name,
-    //             address: body.address,
-    //             totalCapacity: body.totalCapacity,
-    //             availableSlots: body.totalCapacity }
-    //         ])
-    //
-    //         .execute();
-    //     return result;
-    // }
+    updateParking = async (parkingLot: any, id: any): Promise<any> => {
+        let result = await this.createQueryBuilder("parking_lot")
+            .update(ParkingLot)
+            .set(parkingLot)
+            .where(`parking_lot.id='${id}'`)
+            .execute();
+        return result;
+    }
 
 }

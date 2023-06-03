@@ -1,56 +1,46 @@
-import {User} from "../models/user.model";
-import {getCustomRepository, getRepository} from "typeorm";
-import {CustomUserRepository} from "../Repository/CustomUserRepository"
-import * as imageService from "../Service/ImageService"
+import { User } from "../models/user.model";
+import { getCustomRepository, getRepository } from "typeorm";
+import { CustomUserRepository } from "../Repository/CustomUserRepository";
+import * as imageService from "../Service/ImageService";
 
-/**
- * Get All Chefs in the database
- */
-export const getAllUser = async (start: string): Promise<any> => {
-    if (parseInt(start) > 5) {
-        let chefs: User[] = [];
-        return chefs;
-    }
-
-    let userRepository = getCustomRepository(CustomUserRepository);
-    let searchResult = await userRepository.findAllAdmin();
-    return searchResult;
+export const getAllUsers = async (): Promise<any> => {
+  let userRepository = getCustomRepository(CustomUserRepository);
+  let searchResult = await userRepository.getAllUsers();
+  return searchResult;
 };
 
-export const getProfile = async (id: any): Promise<any> => {
-    let userRepository = getCustomRepository(CustomUserRepository);
-    let userDetails = await userRepository.getProfile(id)
-    return userDetails
-}
+export const getUserById = async (id: any): Promise<any> => {
+  let userRepository = getCustomRepository(CustomUserRepository);
+  let userDetails = await userRepository.getUserById(id);
+  return userDetails;
+};
 
-export const updateProfile = async (id: any, body: any): Promise<any> => {
+export const updateUser = async (body: any): Promise<any> => {
+  const { userDetails, id } = body;
+  let userRepository = getCustomRepository(CustomUserRepository);
+  let updateResult = await userRepository.updateUser(userDetails, id);
+  return updateResult;
+};
 
-    let imageData: any = await imageService.uploadImageBase64({
-        image: body.imageBase64
-    }, id)
-    let userRepository = getRepository(User);
+// export const updateProfile = async (id: any, body: any): Promise<any> => {
 
-    let userData = {
-        name: body.name,
-        id: id,
-        email: body.email,
-        image: {
-            id: imageData.id
-        }
-    }
+//     let imageData: any = await imageService.uploadImageBase64({
+//         image: body.imageBase64
+//     }, id)
+//     let userRepository = getRepository(User);
 
-    let userDetails = await userRepository.save(userData)
+//     let userData = {
+//         name: body.name,
+//         id: id,
+//         email: body.email,
+//         image: {
+//             id: imageData.id
+//         }
+//     }
 
-    return {
-        "message": "user updated successfully"
-    }
-}
+//     let userDetails = await userRepository.save(userData)
 
-
-export const getSingleUserById = async (id: any): Promise<any> => {
-    let userRepository = getCustomRepository(CustomUserRepository);
-    let userDetails = await userRepository.getProfile(id)
-    return userDetails
-}
-
-
+//     return {
+//         "message": "user updated successfully"
+//     }
+// }

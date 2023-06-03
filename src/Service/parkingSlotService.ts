@@ -1,6 +1,6 @@
 import {User} from "../models/user.model";
 import {getCustomRepository, getRepository} from "typeorm";
-import * as imageService from "../Service/ImageService"
+import * as plotService from "../Service/parkingLotService";
 import { CustomParkingSlotRepository } from "../Repository/CustomParkingSlotRepository";
 import { ParkingSlot } from "../models/parkingSlot.model";
 
@@ -35,9 +35,49 @@ export const createParkingSlots = async (parkingSlotNumbers: string[], parkingLo
     return insertResult;
 }
 
-export const updateParkingSlot = async (parkingSlot: any, id:number): Promise<any> => {
+export const parkVehicle = async (body: any): Promise<any> => {
+    const userId = body.userId;
+    const parkingSlotId = body.parkingSlotId;
+    const engagedFor = body.engagedFor;
+    const updatedParkingSlot = {
+      userId: userId,
+      engagedFor: engagedFor,
+      isAvailable: false,
+    };
     let parkingSlotRepository = getCustomRepository(CustomParkingSlotRepository);
-    let updateResult = await parkingSlotRepository.updateParkingSlot(parkingSlot, id);
+    const pSlot = await parkingSlotRepository.getSingleParkingSlot(parkingSlotId);
+    console.log("Pslot",pSlot);
+    
+    const pLot = await plotService.getSingleParkingLot(pSlot.parkingLotId);
+    const updatedParkingLot = {
+        availableSlots: pLot.availableSlots-1
+    }
+    const updateParkingLotReq = plotService.updateParkingLot({parkingLot:updatedParkingLot, id:pLot.id});
+    const updateParkingSlotReq = parkingSlotRepository.updateParkingSlot(updatedParkingSlot, parkingSlotId);
+    const updateResult = await Promise.all([updateParkingLotReq, updateParkingSlotReq]);
+    return updateResult;
+}
+
+export const unParkVehicle = async (body: any): Promise<any> => {
+    const userId = body.userId;
+    const parkingSlotId = body.parkingSlotId;
+    
+    const updatedParkingSlot = {
+      userId: null,
+      engagedFor: null,
+      isAvailable: true
+    };
+
+    let parkingSlotRepository = getCustomRepository(CustomParkingSlotRepository);
+    const pSlot = await parkingSlotRepository.getSingleParkingSlot(parkingSlotId);
+    
+    const pLot = await plotService.getSingleParkingLot(pSlot.parkingLotId);
+    const updatedParkingLot = {
+        availableSlots: pLot.availableSlots+1
+    }
+    const updateParkingLotReq = plotService.updateParkingLot({parkingLot:updatedParkingLot, id:pLot.id});
+    const updateParkingSlotReq = parkingSlotRepository.updateParkingSlot(updatedParkingSlot, parkingSlotId);
+    const updateResult = await Promise.all([updateParkingLotReq, updateParkingSlotReq]);
     return updateResult;
 }
 

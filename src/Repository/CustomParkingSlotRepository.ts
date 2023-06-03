@@ -14,15 +14,24 @@ export class CustomParkingSlotRepository extends AbstractRepository<ParkingSlot>
 
     getParkingSlotsForParkingLot = async (parkingLotId: any): Promise<any | undefined> => {
         let result = await this.createQueryBuilder("ps")
-            .where(`ps.parkingLotId = '${parkingLotId}'`)
+            .where(`ps.parkinglot_id = '${parkingLotId}'`)
             .getMany();
         return result;
     };
 
     getSingleParkingSlot = async (id: any): Promise<any | undefined> => {
         let result = await this.createQueryBuilder("ps")
+            .select(['ps.id', 'ps.number', 'ps.isAvailable', 'ps.engagedFor', 'ps.parkinglot_id'])
             .where(`ps.id = '${id}'`)
-            .getMany();
+            .getRawOne();
+
+        result = {
+            id:result.ps_id,
+            number: result.ps_number,
+            isAvailable: result.ps_isAvailable,
+            engagedFor:result.ps_engagedFor,
+            parkingLotId:result.parkinglot_id
+        }
         return result;
     };
 
@@ -53,10 +62,10 @@ export class CustomParkingSlotRepository extends AbstractRepository<ParkingSlot>
     };
 
     updateParkingSlot = async (parkingSlot:any, id: number): Promise<any> => {
-        let result = await this.createQueryBuilder("ps")
+        let result = await this.createQueryBuilder("parking_slot")
             .update(ParkingSlot)
             .set(parkingSlot)
-            .where(`ps.id = '${id}'`)
+            .where(`parking_slot.id = '${id}'`)
             .execute();
         return result;
     }

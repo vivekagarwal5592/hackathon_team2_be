@@ -1,5 +1,4 @@
-import {Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
-import {Image} from "./image.model";
+import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
 export class User {
@@ -10,8 +9,11 @@ export class User {
     @Column()
     name: string;
 
-    @Column({ nullable: true })
+    @Column()
     email: string;
+    
+    @Column()
+    phone: string;
 
     @Column()
     role: string;

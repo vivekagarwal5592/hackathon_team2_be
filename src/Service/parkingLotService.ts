@@ -46,7 +46,13 @@ export const insertParkingLot = async (body: any): Promise<any> => {
 };
 
 export const updateParkingLot = async (body: any): Promise<any> => {
-  // let userRepository = getCustomRepository(CustomUserRepository);
-  // let searchResult = await userRepository.findAllAdmin();
-  // return searchResult;
+    const {parkingLot, id} = body;
+  let parkingRepository = getCustomRepository(CustomParkingLotRepository);
+  let updateResult = await parkingRepository.updateParking(parkingLot, id);
+  return updateResult;
 };
+export const getAllParkingSlots = async (parkingLotId: any) => {
+    let result = await pSlotService.getAllParkingSlotsForParkingLot(parkingLotId)
+    return result;
+}
+

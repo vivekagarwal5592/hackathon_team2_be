@@ -24,11 +24,19 @@ export default (() => {
             .catch((err: any) => res.status(500).send(err));
     });
 
-    router.post('/update', function (req: any, res: any) {
-        let parkingLot = req.body.parkinglot;
-        plotService.updateParkingLot(parkingLot)
+    router.put('/update', function (req: any, res: any) {
+        const body = req.body;
+        plotService.updateParkingLot(body)
             .then((result: any) => res.status(200).send(result))
             .catch((err: any) => res.status(500).send(err));
+    });
+
+    router.get("/:parkingLotId/parkingSlots", function (req: any, res: any) {
+    let parkingLotId = req.params.parkingLotId;
+    plotService
+        .getAllParkingSlots(parkingLotId)
+        .then((result: any) => res.status(200).send(result))
+        .catch((err: any) => res.status(500).send(err));
     });
 
     return router;
