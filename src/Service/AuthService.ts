@@ -298,7 +298,7 @@ export const verifyJWTToken = async (token: string) => {
 const generateJWTTokens = (user: any) => {
 
     let token = jwt.sign({
-        email: user,
+        user: user,
         exp: Math.floor(Date.now() / 1000) + (60 * 60),
     }, jwt_secret);
 
