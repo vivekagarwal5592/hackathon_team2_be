@@ -51,7 +51,7 @@ createConnection({
     app.use(cookies());
     app.use(bodyParser.json()); // support json encoded bodies
     app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
-    app.use(cors());
+    app.use(cors(options));
     app.use("/api/users", userController);
     app.use("/api/parkinglot", parkingLotController);
     app.use("/api/parkingSlot", parkingSlotController);
