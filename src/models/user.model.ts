@@ -12,12 +12,11 @@ export class User {
     @Column()
     email: string;
 
-    @Column()
+    @Column({ nullable: true })
     phone: string;
 
     @Column()
     role: string;
-
 
     @Column({ nullable: true })
     password: string;
