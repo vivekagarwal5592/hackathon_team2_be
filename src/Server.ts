@@ -3,6 +3,7 @@ import express from "express";
 import userController from "./routes/user.controller";
 import imageController from "./routes/image.controller";
 import parkingLotController from "./routes/parkingLot.controller";
+import authController from "./routes/auth.controller";
 import cookies from "cookie-parser"
 // import tokenController from "./routes/token.controller"
 import {createConnection} from "typeorm";
@@ -58,8 +59,8 @@ createConnection({
     app.use("/api/users", userController);
     app.use("/api/parkinglot", parkingLotController);
     app.use("/api/parkingSlot", parkingSlotController);
+    app.use("/api/auth", authController);
     app.use("/api/image", imageController);
-
 
     // app.use("/api/token", tokenController);
     // app.use("/favicon.ico", process.env.NODE_ENV == 'development' ? express.static("./build/favicon.ico") : express.static("../../build/favicon.ico"));
