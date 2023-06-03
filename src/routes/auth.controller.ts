@@ -8,7 +8,7 @@ export default (() => {
         authService.Login(req.body)
             .then((result:any) => {
                     if (result?.error != null) {
-                        res.status(401).send(result)
+                        res.status(401).send({error:"Please enter valid email and password"})
                     } else {
                         res.cookie('token', result.ACCESS_TOKEN + "~" + result.REFRESH_TOKEN)
                         res.status(200).send(result)}
