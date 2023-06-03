@@ -11,12 +11,13 @@ export class User {
 
     @Column()
     email: string;
-    
+
     @Column()
     phone: string;
 
     @Column()
     role: string;
+
 
     @Column({ nullable: true })
     password: string;
