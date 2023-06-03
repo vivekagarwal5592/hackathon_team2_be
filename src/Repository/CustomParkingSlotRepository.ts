@@ -18,6 +18,14 @@ export class CustomParkingSlotRepository extends AbstractRepository<ParkingSlot>
             .getMany();
         return result;
     };
+    
+    getParkingSlotsForUser = async (userId: number): Promise<any | undefined> => {
+        let result = await this.createQueryBuilder("ps")
+            .where(`ps.userId= '${userId}'`)
+            .getMany();
+        return result;
+    };
+
 
     getSingleParkingSlot = async (id: any): Promise<any | undefined> => {
         let result = await this.createQueryBuilder("ps")

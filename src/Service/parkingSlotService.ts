@@ -36,7 +36,12 @@ export const createParkingSlots = async (parkingSlotNumbers: string[], parkingLo
 }
 
 export const parkVehicle = async (body: any): Promise<any> => {
+    const parkingSlotRepository = getCustomRepository(CustomParkingSlotRepository);
     const userId = body.userId;
+    const userSlots = await parkingSlotRepository.getParkingSlotsForUser(userId);
+    if(userSlots && userSlots.length){
+        return {error: "User has an active slot"};
+    }
     const parkingSlotId = body.parkingSlotId;
     const engagedFor = body.engagedFor;
     const updatedParkingSlot = {
@@ -44,7 +49,7 @@ export const parkVehicle = async (body: any): Promise<any> => {
       engagedFor: engagedFor,
       isAvailable: false,
     };
-    let parkingSlotRepository = getCustomRepository(CustomParkingSlotRepository);
+    
     const pSlot = await parkingSlotRepository.getSingleParkingSlot(parkingSlotId);
     console.log("Pslot",pSlot);
     
@@ -59,7 +64,6 @@ export const parkVehicle = async (body: any): Promise<any> => {
 }
 
 export const unParkVehicle = async (body: any): Promise<any> => {
-    const userId = body.userId;
     const parkingSlotId = body.parkingSlotId;
     
     const updatedParkingSlot = {
