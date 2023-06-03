@@ -1,6 +1,6 @@
 import {Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Image} from "./image.model";
-import {ParkingLotModel} from "./parkingLot.model";
+import {ParkingLot} from "./parkingLot";
 
 @Entity()
 export class ParkingSlot {
@@ -24,8 +24,8 @@ export class ParkingSlot {
     @Column()
     parkingLotId: string;
 
-    @ManyToOne((type) => ParkingLotModel, parkingLot=>parkingLot.parkingSlots)
+    @ManyToOne((type) => ParkingLot, parkingLot=>parkingLot.parkingSlots)
     @JoinColumn({name: "parkinglot_id"})
-    public parkingLot: ParkingLotModel;
+    public parkingLot: ParkingLot;
 
 }

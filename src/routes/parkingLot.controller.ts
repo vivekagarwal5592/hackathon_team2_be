@@ -18,7 +18,7 @@ export default (() => {
     });
 
     router.post('/add', function (req: any, res: any) {
-        let parkingLot = req.body.parkinglot;
+        let parkingLot = req.body;
         plotService.insertParkingLot(parkingLot)
             .then((result: any) => res.status(200).send(result))
             .catch((err: any) => res.status(500).send(err));

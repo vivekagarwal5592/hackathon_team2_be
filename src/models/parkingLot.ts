@@ -3,7 +3,7 @@ import {Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGener
 import {ParkingSlot} from "./parkingSlot.model"
 
 @Entity()
-export class ParkingLotModel {
+export class ParkingLot {
 
     @PrimaryGeneratedColumn()
     public id: number;

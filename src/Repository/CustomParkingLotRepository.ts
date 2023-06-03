@@ -1,9 +1,9 @@
 import {AbstractRepository, EntityRepository} from "typeorm";
 import {User} from "../models/user.model";
-import {ParkingLotModel} from "../models/parkingLot.model";
+import {ParkingLot} from "../models/parkingLot";
 import {Token} from "../models/token.model";
 
-@EntityRepository(ParkingLotModel)
+@EntityRepository(ParkingLot)
 export class CustomParkingLotRepository extends AbstractRepository<User> {
 
     /**
@@ -17,7 +17,7 @@ export class CustomParkingLotRepository extends AbstractRepository<User> {
 
     getSingleParking = async (id: any): Promise<any | undefined> => {
         let result = await this.createQueryBuilder("p")
-            .where(`u.email = '${id}'`)
+            .where(`p.id = '${id}'`)
             .getMany();
         return result;
     };
@@ -25,7 +25,7 @@ export class CustomParkingLotRepository extends AbstractRepository<User> {
     insertParking = async (body: any): Promise<any | undefined> => {
         let result = await this.createQueryBuilder("dt")
             .insert()
-            .into(ParkingLotModel)
+            .into(ParkingLot)
             .values([
                 {name: body.name,
                     address: body.address,

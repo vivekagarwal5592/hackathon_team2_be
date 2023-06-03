@@ -14,7 +14,7 @@ import {User} from "./models/user.model";
 import {apiKeys} from "../config"
 import {Image} from "./models/image.model";
 import {ParkingSlot} from "./models/parkingSlot.model";
-import {ParkingLotModel} from "./models/parkingLot.model";
+import {ParkingLot} from "./models/parkingLot";
 
 
 require("reflect-metadata");
@@ -44,7 +44,7 @@ createConnection({
     entityPrefix: "",
     entities: [
         ParkingSlot,
-        ParkingLotModel,
+        ParkingLot,
         User,
         Token,
         Image,
