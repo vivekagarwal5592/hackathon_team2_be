@@ -17,10 +17,6 @@ export class ParkingSlot {
     @Column({default:null})
     public engagedFor: number;
 
-    @OneToOne(() => Image)
-    @JoinColumn({name: "image_id"})
-    image: Image;
-
     @ManyToOne((type) => ParkingLot, parkingLot=>parkingLot.parkingSlots)
     @JoinColumn({name: "parkinglot_id"})
     public parkingLot: ParkingLot;

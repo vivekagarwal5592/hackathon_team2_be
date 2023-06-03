@@ -4,6 +4,7 @@ import { CustomParkingLotRepository } from "../Repository/CustomParkingLotReposi
 import * as imageService from "../Service/ImageService";
 import * as pSlotService from "../Service/parkingSlotService";
 import { ParkingLot } from "../models/parkingLot";
+import {ParkingSlot} from "../models/parkingSlot.model";
 
 export const getAllParkingLots = async (): Promise<any> => {
   let parkingLotRepository = getCustomRepository(CustomParkingLotRepository);
@@ -29,15 +30,18 @@ export const insertParkingLot = async (body: any): Promise<any> => {
   };
 
   let parkingLotRepository = getCustomRepository(CustomParkingLotRepository);
-  const parkingSlots: any[] = parkingSlotIds.map((number: any) => {
-    return {
-      number: number,
-      isAvailable: true,
-    };
+
+  parkingSlotIds.forEach((item: any) => {
+    let parkingLotSlot = new ParkingSlot()
+    parkingLotSlot.number = item
+    parkingLotSlot.isAvailable = true
+    parkingLotSlot.engagedFor = 0
+    parkingLot.parkingSlots.push(parkingLotSlot)
   });
-  parkingLot.parkingSlots = parkingSlots;
-  let result = await parkingLotRepository.insertParking(parkingLot);
-  pSlotService.createParkingSlots(parkingSlotIds, result.id);
+
+  const parkingRepository = getRepository(ParkingLot);
+  let result = await parkingRepository.save(parkingLot);
+
   return result;
 };
 
