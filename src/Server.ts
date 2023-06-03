@@ -36,8 +36,8 @@ const options: cors.CorsOptions = {
 //Connects to the Database -> then starts the express
 createConnection({
     type: "postgres",
-    host: "localhost",
-    port: 5432,
+    host: apiKeys.db_host,
+    port: apiKeys.db_port,
     username: apiKeys.db_user,
     password: apiKeys.db_password,
     database: apiKeys.db_name,
