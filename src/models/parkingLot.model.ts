@@ -1,6 +1,5 @@
 import {Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
-import {Blog} from "./blog.model";
-import {Image} from "./image.model";
+
 import {ParkingSlot} from "./parkingSlot.model"
 
 @Entity()

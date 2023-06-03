@@ -1,20 +1,20 @@
 import express from "express";
-import blogsController from "./routes/blogs.controller";
-import adminController from "./routes/admin/admin.controller"
-import adminBlogController from "./routes/admin/admin.blog.controller";
-import adminImagesController from "./routes/admin/admin.images.controller";
-import adminUserController from "./routes/admin/admin.user.controller";
+
+import userController from "./routes/user.controller";
+import imageController from "./routes/image.controller";
 import cookies from "cookie-parser"
 // import tokenController from "./routes/token.controller"
 import {createConnection} from "typeorm";
 import bodyParser from "body-parser";
 import cors from "cors";
-import {Blog} from "./models/blog.model";
+
 import {Token} from "./models/token.model"
 import {User} from "./models/user.model";
 import {apiKeys} from "../config"
 import {Image} from "./models/image.model";
-import imageController from "./routes/image.controller";
+import {ParkingSlot} from "./models/parkingSlot.model";
+import {ParkingLotModel} from "./models/parkingLot.model";
+
 
 require("reflect-metadata");
 const app = express();
@@ -42,7 +42,8 @@ createConnection({
     logging: false,
     entityPrefix: "",
     entities: [
-        Blog,
+        ParkingSlot,
+        ParkingLotModel,
         User,
         Token,
         Image,
@@ -52,13 +53,10 @@ createConnection({
     app.use(bodyParser.json()); // support json encoded bodies
     app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
     app.use(cors(options));
-    app.use("/api/blogs", blogsController);
+    app.use("/api/users", userController);
     app.use("/api/image", imageController);
-    app.use("/api/admin/blogs", adminBlogController);
-    app.use("/api/admin/images", adminImagesController);
-    app.use("/api/admin/users", adminUserController);
-    app.use("/api/admin", adminController);
-    app.use("/api/auth", adminController);
+
+
     // app.use("/api/token", tokenController);
     // app.use("/favicon.ico", process.env.NODE_ENV == 'development' ? express.static("./build/favicon.ico") : express.static("../../build/favicon.ico"));
     // app.use("/logo192.png", process.env.NODE_ENV == 'development' ? express.static("./build/logo192.png") : express.static("../../build/logo192.png"));

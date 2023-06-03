@@ -60,8 +60,7 @@ export const uploadImageBase64 = async (base64: any, userId: any) => {
             let newImage = new Image()
             newImage.name = fileName
 
-            newImage.user = new User()
-            newImage.user.id = userId
+
 
             const imageRepository = getRepository(Image);
             let image = await imageRepository.save(newImage);
@@ -132,8 +131,7 @@ export const uploadRecipeImageFromLocal = async (files: any, userId: any) => {
             let newImage = new Image()
             newImage.name = fileName
 
-            newImage.user = new User()
-            newImage.user.id = userId
+
 
             const imageRepository = getRepository(Image);
             let image = await imageRepository.save(newImage);

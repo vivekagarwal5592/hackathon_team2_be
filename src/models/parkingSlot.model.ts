@@ -24,8 +24,7 @@ export class ParkingSlot {
     @Column()
     parkingLotId: string;
 
-    @ManyToOne((type) => ParkingLotModel, parkingLot=>parkingLot.parkingSlots,
-        {cascade: true})
+    @ManyToOne((type) => ParkingLotModel, parkingLot=>parkingLot.parkingSlots)
     @JoinColumn({name: "parkinglot_id"})
     public parkingLot: ParkingLotModel;
 

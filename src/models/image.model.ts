@@ -19,8 +19,4 @@ export class Image {
     @Column({nullable: true, default: () => "CURRENT_TIMESTAMP"})
     updated_at: Date;
 
-    @ManyToOne((type) => User, user=>user.blogs)
-    @JoinColumn({name: "user_id"})
-    public user: User;
-
 }
