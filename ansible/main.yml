@@ -1,0 +1,34 @@
+---
+
+- hosts: all
+  vars_files:
+    - inventory/vars/default.yml
+    - vault/vault.yml
+  vars:
+    project_path: /var/www/nodejs
+    release_path: "{{ project_path }}/releases/package"
+    current_path: "{{ project_path }}/current"
+    user_deploy: "vagrant"
+    db_user: "{{db_user}}"
+    db_name: "{{db_name}}"
+    db_password: "{{db_password}}"
+    es_heap_size: 512m
+  roles:
+    - { role: pg_sql, tags: [pg_sql]}
+    - { role: env_vars, tags: [env_vars]}
+    - { role: deploy, tags: [deploy]}
+
+  handlers:
+    - name: Reload Apache
+      become: yes
+      become_method: sudo
+      service:
+          name: apache2
+          state: reloaded
+
+    - name: Restart Apache
+      become: yes
+      become_method: sudo
+      service:
+            name: apache2
+            state: restarted

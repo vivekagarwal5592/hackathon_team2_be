@@ -1,0 +1,6 @@
+---
+app_user: "advdisco"
+#http_host: "recipefunnel.com"
+http_conf: "localhost.conf"
+http_port: "80"
+disable_default: true

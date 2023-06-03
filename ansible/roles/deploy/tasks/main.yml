@@ -1,0 +1,125 @@
+---
+
+- name: Create release directory
+  become: yes
+  become_method: sudo
+  file:
+    name: "{{ release_path }}"
+    state: directory
+
+- name: Create directory
+  become: yes
+  become_method: sudo
+  file:
+    name: "{{ current_path }}"
+    state: directory
+
+#- name: Create .ssh directory
+#  become: yes
+#  become_method: sudo
+#  file:
+#    name: "~/.ssh"
+#    state: directory
+
+#- name: Copy github private key file
+#  become: yes
+#  become_method: sudo
+#  copy:
+#    src: /Users/vagarwal/Desktop/github
+#    dest: ~/.ssh/github
+#    mode: 0600
+
+#- name: clone git repo
+#  become: yes
+#  become_method: sudo
+#  git:
+#    repo: git@github.com:kud202/recipefunnel.git
+#    key_file: ~/.ssh/github
+#    dest: "{{ release_path }}"
+#    accept_hostkey: yes
+#    force: yes
+#    recursive: no
+
+- name: Copy BE build
+  become: yes
+  become_method: sudo
+  synchronize:
+    src: "{{ playbook_dir }}/../"
+    dest: "{{ release_path }}"
+
+#- name: symlink directories
+#  become: yes
+#  file:
+#    src: "{{ release_path }}"
+#    dest: "{{ current_path }}"
+#    force: yes
+#    state: link
+#
+#- name: Uninstall "sharp" node.js package.
+#  become: yes
+#  npm:
+#    name: "sharp"
+#    state: absent
+#    path: /var/www/nodejs/releases/package
+#
+#- name: Uninstall "@types/sharp" node.js package.
+#  become: yes
+#  npm:
+#    name: "@types/sharp"
+#    state: absent
+#    path: /var/www/nodejs/releases/package
+#
+#- name: Install "sharp" node.js package.
+#  become: yes
+#  npm:
+#    name: "sharp"
+##    version: '0.27.2'
+#    unsafe_perm: true
+#    path: /var/www/nodejs/releases/package
+#
+#- name: Install "@types/sharp" node.js package.
+#  become: yes
+#  npm:
+#    name: "@types/sharp"
+#    unsafe_perm: true
+#    path: /var/www/nodejs/releases/package
+
+- name: Uninstall "bcrypt" node.js package.
+  become: yes
+  npm:
+    name: "bcrypt"
+    state: absent
+    path: /var/www/nodejs/releases/package
+
+- name: Install "bcrypt" node.js package.
+  become: yes
+  npm:
+    name: "bcrypt"
+    unsafe_perm: true
+    path: /var/www/nodejs/releases/package
+
+- name: Stop All forever processes
+  command: forever stopall
+
+#- name: Build Backend
+#  become: yes
+#  shell:
+#    chdir: "{{ current_path }}"
+#    cmd: npm run build_backend
+
+- name: Run backend
+  shell:
+    chdir: "{{ current_path }}/server_dist/src"
+    cmd: forever start -c "node --trace-warnings Server.js" ./
+
+
+#- name: "Check list of Node.js apps running."
+#  become: yes
+#  command: forever list
+#  register: forever_list
+#  changed_when: false
+
+#- name: "Start example Node.js app."
+#  become: yes
+#  command: pm2 start {{release_path}}/pm2.config.js
+#  when: "forever_list.stdout.find('/path/to/app.js') == -1"
