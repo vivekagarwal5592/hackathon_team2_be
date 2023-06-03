@@ -2,6 +2,7 @@ import express from "express";
 
 import userController from "./routes/user.controller";
 import imageController from "./routes/image.controller";
+import parkingLotController from "./routes/parkingLot.controller";
 import cookies from "cookie-parser"
 // import tokenController from "./routes/token.controller"
 import {createConnection} from "typeorm";
@@ -54,6 +55,7 @@ createConnection({
     app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
     app.use(cors(options));
     app.use("/api/users", userController);
+    app.use("/api/parkinglot", parkingLotController);
     app.use("/api/image", imageController);
 
 
