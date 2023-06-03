@@ -5,25 +5,11 @@
     path: "/etc/environment"
     line: "{{ item.line }}"
   with_items:
-    - { line: "unsplash={{ unsplash }}" }
-    - { line: "pixabay={{ pixabay }}" }
-    - { line: "pexels={{ pexels }}" }
-    - { line: "sendgrid={{ sendgrid }}" }
-    - { line: "nutritionixappid={{ nutritionixappid }}" }
-    - { line: "nutritionixappkey={{ nutritionixappkey }}" }
-    - { line: "usda={{ usda }}" }
-    - { line: "facebook={{ facebook }}" }
-    - { line: "firebase_private_key_id={{ firebase_private_key_id }}" }
+
 #    - { line: "firebase_private_key={{ firebase_private_key }}" }
     - { line: "db_user={{ db_user }}" }
     - { line: "db_password={{ db_password }}" }
     - { line: "db_name={{ db_name }}" }
     - { line: "NODE_ENV=production" }
-    - { line: "recaptcha={{ recaptcha }}"}
-    - { line: "mail_box_layer={{ mail_box_layer }}"}
-    - { line: "amazon_api_access_key={{ amazon_api_access_key }}"}
-    - { line: "amazon_api_secret_key={{ amazon_api_secret_key }}"}
-    - { line: "aws_access_key_id={{ aws_access_key_id }}"}
-    - { line: "aws_secret_access_key={{ aws_secret_access_key }}"}
     - { line: "PGPASSWORD={{ db_password }}"}
     - { line: "jwt_secret={{ jwt_secret }}"}

@@ -1,0 +1,50 @@
+---
+- name: Setup Node
+  #become: yes
+#  become_flags: -i # Execute config files such as .profile (Ansible uses non-interactive login shells)
+  #become_method: sudo
+  block:
+#    - name: Install nvm
+#      ansible.builtin.command: curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.38.0/install.sh | bash
+#      args:
+#        ansible.builtin.shell: /bin/bash
+#        chdir: "$HOME"
+#        creates: "$HOME/.nvm/nvm.sh"
+#
+#    - name: Setup .bashrc
+#      ansible.builtin.lineinfile:
+#        path: ~/.bashrc
+#        line: source ~/.nvm/nvm.sh # This will make sure Node is on the user's PATH
+#        create: yes
+#
+#    - name: source nvm
+#      ansible.builtin.command: source ~/.bashrc
+#      args:
+#        ansible.builtin.shell: /bin/bash
+#
+#    - name: Install node and set version
+##      become: yes
+##      become_method: sudo
+#      shell: "source $HOME/.nvm/nvm.sh && nvm install 14.19.1"
+#      args:
+#        ansible.builtin.shell: /bin/bash
+#
+#    - name: Install npm
+#      become: yes
+#      become_method: sudo
+#      apt: name={{ item }} update_cache=true state=latest
+#      with_items:
+#        - npm
+
+    - name: Install "forever" node.js package globally.
+      become: yes
+      become_method: sudo
+      npm:
+        name: forever
+        global: yes
+
+
+#- name: "Install typescript for pm2"
+#  become: yes
+#  become_method: sudo
+#  command: pm2 install typescript

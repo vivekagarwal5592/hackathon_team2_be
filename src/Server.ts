@@ -26,11 +26,7 @@ const port = 8080; // default port to listen
 
 //options for cors midddleware
 const options: cors.CorsOptions = {
-    origin: ['http://localhost:80',
-        'http://localhost:8080',
-        'http://localhost:3000',
-        'https://www.lazytravller.com',
-        'https://lazytravller.com']
+    origin: "*"
 };
 
 //Connects to the Database -> then starts the express
@@ -55,7 +51,7 @@ createConnection({
     app.use(cookies());
     app.use(bodyParser.json()); // support json encoded bodies
     app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
-    app.use(cors(options));
+    app.use(cors());
     app.use("/api/users", userController);
     app.use("/api/parkinglot", parkingLotController);
     app.use("/api/parkingSlot", parkingSlotController);
