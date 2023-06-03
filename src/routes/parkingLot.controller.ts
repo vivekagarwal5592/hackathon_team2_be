@@ -3,7 +3,7 @@ import * as plotService from "../Service/parkingLotService"
 export default (() => {
     const router = require('express').Router();
 
-    router.get('/start/', function (req: any, res: any) {
+    router.get('/all/', function (req: any, res: any) {
         let start = req.params.start;
         plotService.getAllParkingLots()
             .then((result: any) => res.status(200).send(result))
@@ -24,17 +24,12 @@ export default (() => {
             .catch((err: any) => res.status(500).send(err));
     });
 
-
     router.post('/update', function (req: any, res: any) {
         let parkingLot = req.body.parkinglot;
         plotService.updateParkingLot(parkingLot)
             .then((result: any) => res.status(200).send(result))
             .catch((err: any) => res.status(500).send(err));
     });
-
-
-
-
 
     return router;
 })();

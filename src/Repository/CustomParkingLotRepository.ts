@@ -33,8 +33,8 @@ export class CustomParkingLotRepository extends AbstractRepository<User> {
                     totalCapacity: body.totalCapacity,
                     availableSlots: body.totalCapacity }
             ])
-
             .execute();
+
         return result;
     };
 
