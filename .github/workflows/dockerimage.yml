@@ -18,9 +18,6 @@ jobs:
       run: npm i
     - name: build backend
       run: npm run build_backend
-    - name: build front end
-      run: npm run build_FE
-
 
     - name: Set up Python 3.7
       uses: actions/setup-python@v1
