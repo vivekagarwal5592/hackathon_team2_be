@@ -8,20 +8,24 @@ import { ParkingSlot } from "../models/parkingSlot.model";
 export class CustomParkingSlotRepository extends AbstractRepository<ParkingSlot> {
 
     getAllParkingSlots = async (): Promise<any | undefined> => {
-        let result = await this.createQueryBuilder("ps").getMany();
+        let result = await this.createQueryBuilder("ps")
+            .orderBy("ps.id")
+            .getMany();
         return result;
     };
 
     getParkingSlotsForParkingLot = async (parkingLotId: any): Promise<any | undefined> => {
         let result = await this.createQueryBuilder("ps")
             .where(`ps.parkinglot_id = '${parkingLotId}'`)
+            .orderBy("ps.id")
             .getMany();
         return result;
     };
-    
+
     getParkingSlotsForUser = async (userId: number): Promise<any | undefined> => {
         let result = await this.createQueryBuilder("ps")
             .where(`ps.userId= '${userId}'`)
+            .orderBy("ps.id")
             .getMany();
         return result;
     };
@@ -59,7 +63,7 @@ export class CustomParkingSlotRepository extends AbstractRepository<ParkingSlot>
     //         .execute();
     //     return result;
     // };
-    
+
     insertParkingSlots = async (parkingSlots: ParkingSlot[]): Promise<any | undefined> => {
         let result = await this.createQueryBuilder("ps")
             .insert()
