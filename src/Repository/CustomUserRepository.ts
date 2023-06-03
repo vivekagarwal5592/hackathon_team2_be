@@ -5,7 +5,10 @@ import {User} from "../models/user.model";
 export class CustomUserRepository extends AbstractRepository<User> {
 
     getAllUsers = async (): Promise<any | undefined> => {
-        let result = await this.createQueryBuilder("u").select(['u.id', 'u.name', 'u.email', 'u.phone', 'u.role']).getMany();
+        let result = await this.createQueryBuilder("u")
+            .select(['u.id', 'u.name', 'u.email', 'u.phone', 'u.role'])
+            .orderBy("u.id")
+            .getMany();
         return result;
     };
 

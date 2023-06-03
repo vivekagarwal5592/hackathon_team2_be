@@ -11,7 +11,9 @@ export class CustomParkingLotRepository extends AbstractRepository<User> {
      * @param recipeId
      */
     getAllParkingLots = async (): Promise<any | undefined> => {
-        let result = await this.createQueryBuilder("p").getMany();
+        let result = await this.createQueryBuilder("p")
+            .orderBy("p.id")
+            .getMany();
         return result;
     };
 
@@ -19,22 +21,6 @@ export class CustomParkingLotRepository extends AbstractRepository<User> {
         let result = await this.createQueryBuilder("p")
             .where(`p.id = '${id}'`)
             .getOne();
-        return result;
-    };
-
-    insertParking = async (body: any): Promise<any | undefined> => {
-        let result = await this.createQueryBuilder("dt")
-            .insert()
-            .into(ParkingLot)
-            .values([
-                {name: body.name,
-                    parkingSlots: body.parkingSlots,
-                    address: body.address,
-                    totalCapacity: body.totalCapacity,
-                    availableSlots: body.totalCapacity }
-            ])
-            .execute();
-
         return result;
     };
 
