@@ -15,6 +15,7 @@ import {apiKeys} from "../config"
 import {Image} from "./models/image.model";
 import {ParkingSlot} from "./models/parkingSlot.model";
 import {ParkingLot} from "./models/parkingLot";
+import parkingSlotController from "./routes/parkingSlot.controller";
 
 
 require("reflect-metadata");
@@ -56,6 +57,7 @@ createConnection({
     app.use(cors(options));
     app.use("/api/users", userController);
     app.use("/api/parkinglot", parkingLotController);
+    app.use("/api/parkingSlot", parkingSlotController);
     app.use("/api/image", imageController);
 
 
