@@ -82,4 +82,10 @@ export class CustomParkingSlotRepository extends AbstractRepository<ParkingSlot>
         return result;
     }
 
+    updateParkingSlotByOneMinute = async (): Promise<any> => {
+        const result = await this.manager.query(`update parking_slot set engaged_for = engaged_for - 1 where engaged_for > 0;
+        `);
+        return result;
+    }
+
 }

@@ -15,7 +15,7 @@ export class ParkingSlot {
     @Column()
     isAvailable: boolean;
 
-    @Column({default:null})
+    @Column({name:"engaged_for", default:null})
     public engagedFor: number;
 
     @Column({name:"user_id",nullable:true})
