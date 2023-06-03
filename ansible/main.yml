@@ -17,6 +17,7 @@
     - { role: pg_sql, tags: [pg_sql]}
     - { role: env_vars, tags: [env_vars]}
     - { role: deploy, tags: [deploy]}
+    - { role: node, tags: [node]}
 
   handlers:
     - name: Reload Apache

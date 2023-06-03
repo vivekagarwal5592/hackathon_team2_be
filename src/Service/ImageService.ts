@@ -3,7 +3,6 @@ import fs from "fs";
 import AWS, {Endpoint} from 'aws-sdk';
 //import * as recipeService from "./RecipeService";
 import util from 'util';
-import rimraf from 'rimraf';
 import {apiKeys} from "../../config";
 //import sharp from "sharp";
 import {getRepository} from "typeorm";
@@ -276,7 +275,7 @@ export const deleteTempImages = async () => {
     const filePath = process.env.NODE_ENV == 'development' ? `images/tempImages` : `/var/www/images/tempImages`;
 
     if (fs.existsSync(filePath)) {
-        rimraf.sync(filePath);
+
         return "Video Successfully deleted";
     }
 };
