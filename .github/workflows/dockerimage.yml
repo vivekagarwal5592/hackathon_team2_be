@@ -9,33 +9,35 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Set Node Version
-      uses: actions/setup-node@v1
-      with:
-        node-version: '14.19.3'
-    - name: NPM install
-      run: npm i
-    - name: build backend
-      run: npm run build_backend
+      - uses: actions/checkout@v1
+      - name: Set Node Version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.19.3'
+      - name: NPM install
+        run: npm i
+      - name: build backend
+        run: npm run build_backend
 
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.7
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install ansible==2.9.2 requests
-    - name: set ansible config secrets
-      env:
-        DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
-      run: |
-        mkdir  ~/.ssh
-        echo "$DO_SSH_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-    - name: deploy FE and BE
-      env:
-        DO_API_KEY: ${{ secrets.DO_SSH_KEY }}
-      run: |
-        ansible-playbook ansible/main.yml -i ansible/inventory/host-prod --tags deploy
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ansible==2.9.2 requests
+      - name: set ansible config secrets
+        env:
+          ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+          DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
+        run: |
+          echo "$ANSIBLE_VAULT_PASSWORD" > ~/.recipefunnel-vaultpass
+          mkdir  ~/.ssh
+          echo "$DO_SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+      - name: deploy FE and BE
+        env:
+          DO_API_KEY: ${{ secrets.DO_SSH_KEY }}
+        run: |
+          ansible-playbook ansible/main.yml -i ansible/inventory/host-prod --tags deploy
