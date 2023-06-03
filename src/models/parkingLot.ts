@@ -6,7 +6,7 @@ import {ParkingSlot} from "./parkingSlot.model"
 export class ParkingLot {
 
     @PrimaryGeneratedColumn()
-    public id: number;
+    public id?: number;
 
     @Column()
     name: string;

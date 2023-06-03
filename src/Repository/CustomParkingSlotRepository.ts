@@ -26,22 +26,22 @@ export class CustomParkingSlotRepository extends AbstractRepository<ParkingSlot>
         return result;
     };
 
-    insertParkingSlot = async (parkingSlot: ParkingSlot): Promise<any | undefined> => {
-        let result = await this.createQueryBuilder("ps")
-            .insert()
-            .into(ParkingSlot)
-            .values([
-                {
-                    number:parkingSlot.number,
-                    isAvailable:parkingSlot.isAvailable,
-                    engagedFor: parkingSlot.engagedFor,
-                    parkingLotId:parkingSlot.parkingLotId,
-                }
-            ])
+    // insertParkingSlot = async (parkingSlot: ParkingSlot): Promise<any | undefined> => {
+    //     let result = await this.createQueryBuilder("ps")
+    //         .insert()
+    //         .into(ParkingSlot)
+    //         .values([
+    //             {
+    //                 number:parkingSlot.number,
+    //                 isAvailable:parkingSlot.isAvailable,
+    //                 engagedFor: parkingSlot.engagedFor,
+    //                 parkingLotId:parkingSlot.parkingLotId,
+    //             }
+    //         ])
 
-            .execute();
-        return result;
-    };
+    //         .execute();
+    //     return result;
+    // };
     
     insertParkingSlots = async (parkingSlots: ParkingSlot[]): Promise<any | undefined> => {
         let result = await this.createQueryBuilder("ps")

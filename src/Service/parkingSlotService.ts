@@ -22,7 +22,14 @@ export const getSingleParkingSlot = async (id: any): Promise<ParkingSlot> => {
     return searchResult;
 }
 
-export const insertParkingSlots = async (parkingSlots: ParkingSlot[]): Promise<any> => {
+export const createParkingSlots = async (parkingSlotNumbers: string[], parkingLotId:number): Promise<any> => {
+    const parkingSlots:any[] = parkingSlotNumbers.map(number=>{
+        return {
+            number:number,
+            isAvailable:true,
+            parkingLotId: parkingLotId
+        }
+    });
     let parkingSlotRepository = getCustomRepository(CustomParkingSlotRepository);
     let insertResult = await parkingSlotRepository.insertParkingSlots(parkingSlots);
     return insertResult;

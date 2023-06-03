@@ -28,6 +28,7 @@ export class CustomParkingLotRepository extends AbstractRepository<User> {
             .into(ParkingLot)
             .values([
                 {name: body.name,
+                    parkingSlots: body.parkingSlots,
                     address: body.address,
                     totalCapacity: body.totalCapacity,
                     availableSlots: body.totalCapacity }

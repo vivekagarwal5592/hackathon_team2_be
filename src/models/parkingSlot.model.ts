@@ -6,23 +6,20 @@ import {ParkingLot} from "./parkingLot";
 export class ParkingSlot {
 
     @PrimaryGeneratedColumn()
-    public id: number;
+    public id?: number;
 
     @Column()
-    public number: number;
+    public number: string;
 
     @Column()
     isAvailable: boolean;
 
-    @Column()
+    @Column({default:null})
     public engagedFor: number;
 
     @OneToOne(() => Image)
     @JoinColumn({name: "image_id"})
     image: Image;
-
-    @Column()
-    parkingLotId: string;
 
     @ManyToOne((type) => ParkingLot, parkingLot=>parkingLot.parkingSlots)
     @JoinColumn({name: "parkinglot_id"})
