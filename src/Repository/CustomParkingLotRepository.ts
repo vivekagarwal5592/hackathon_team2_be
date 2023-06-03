@@ -15,7 +15,7 @@ export class CustomParkingLotRepository extends AbstractRepository<User> {
         return result;
     };
 
-    getSingleParking = async (id): Promise<any | undefined> => {
+    getSingleParking = async (id: any): Promise<any | undefined> => {
         let result = await this.createQueryBuilder("p")
             .where(`u.email = '${id}'`)
             .getMany();

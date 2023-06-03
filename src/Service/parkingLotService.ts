@@ -18,7 +18,7 @@ export const getSingleParkingLot = async (id: any): Promise<any> => {
     return searchResult;
 }
 
-export const insertParkingLot = async (parkingLot): Promise<any> => {
+export const insertParkingLot = async (parkingLot: any): Promise<any> => {
     let parkingLotRepository = getCustomRepository(CustomParkingLotRepository);
     let searchResult = await parkingLotRepository.insertParking(parkingLot);
     return searchResult;
