@@ -49,10 +49,10 @@ export const parkVehicle = async (body: any): Promise<any> => {
       engagedFor: engagedFor,
       isAvailable: false,
     };
-    
+
     const pSlot = await parkingSlotRepository.getSingleParkingSlot(parkingSlotId);
     console.log("Pslot",pSlot);
-    
+
     const pLot = await plotService.getSingleParkingLot(pSlot.parkingLotId);
     const updatedParkingLot = {
         availableSlots: pLot.availableSlots-1
@@ -65,7 +65,7 @@ export const parkVehicle = async (body: any): Promise<any> => {
 
 export const unParkVehicle = async (body: any): Promise<any> => {
     const parkingSlotId = body.parkingSlotId;
-    
+
     const updatedParkingSlot = {
       userId: null,
       engagedFor: null,
@@ -74,7 +74,7 @@ export const unParkVehicle = async (body: any): Promise<any> => {
 
     let parkingSlotRepository = getCustomRepository(CustomParkingSlotRepository);
     const pSlot = await parkingSlotRepository.getSingleParkingSlot(parkingSlotId);
-    
+
     const pLot = await plotService.getSingleParkingLot(pSlot.parkingLotId);
     const updatedParkingLot = {
         availableSlots: pLot.availableSlots+1
@@ -83,6 +83,14 @@ export const unParkVehicle = async (body: any): Promise<any> => {
     const updateParkingSlotReq = parkingSlotRepository.updateParkingSlot(updatedParkingSlot, parkingSlotId);
     const updateResult = await Promise.all([updateParkingLotReq, updateParkingSlotReq]);
     return updateResult;
+}
+
+
+export const updateParkingSlotByOneMinute = async () => {
+
+    let parkingSlotRepository = getCustomRepository(CustomParkingSlotRepository);
+    parkingSlotRepository.updateParkingSlotByOneMinute();
+
 }
 
 

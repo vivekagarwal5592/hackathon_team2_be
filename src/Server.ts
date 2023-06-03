@@ -4,7 +4,8 @@ import userController from "./routes/user.controller";
 import imageController from "./routes/image.controller";
 import parkingLotController from "./routes/parkingLot.controller";
 import authController from "./routes/auth.controller";
-import cookies from "cookie-parser"
+import cookies from "cookie-parser";
+import {updateParkingSlot} from "./Service/cron-job";
 // import tokenController from "./routes/token.controller"
 import {createConnection} from "typeorm";
 import bodyParser from "body-parser";
@@ -29,6 +30,10 @@ const options: cors.CorsOptions = {
     origin: "*"
 };
 
+function startCronJobs() {
+    updateParkingSlot.start();
+}
+
 //Connects to the Database -> then starts the express
 createConnection({
     type: "postgres",
@@ -48,6 +53,8 @@ createConnection({
         Image,
     ],
 }).then(async (connection: any) => {
+
+    startCronJobs();
     app.use(cookies());
     app.use(bodyParser.json()); // support json encoded bodies
     app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
